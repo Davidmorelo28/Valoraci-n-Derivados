@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Infografía: Valoración de Derivados | Matemáticas Financieras</title>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* Fondo azul cielo suave */
+            background: linear-gradient(145deg, #7fc9ff 0%, #3b8fd9 100%);
+            font-family: 'Inter', sans-serif;
+            padding: 2rem 1.5rem;
+            color: #0a2f44;
+        }
+
+        .infografia-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, #FFE6B0, #FFF0C0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #fef9e6;
+            font-weight: 500;
+            background: rgba(0,0,0,0.15);
+            display: inline-block;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+        }
+        .badge-derivados {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,245,0.25);
+            backdrop-filter: blur(8px);
+            border-radius: 60px;
+            padding: 0.5rem 1.5rem;
+            margin-top: 1rem;
+            font-weight: 600;
+            border: 1px solid rgba(255,250,210,0.6);
+            color: #fff6df;
+        }
+
+        /* Grid de cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Card principal - fondo claro */
+        .principal-card {
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(4px);
+            border-radius: 2rem;
+            padding: 1.8rem;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.25s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255,255,220,0.7);
+        }
+        .principal-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Emoji grande */
+        .emoji-large {
+            font-size: 3.6rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: inline-block;
+        }
+
+        /* Título con un SOLO emoji al inicio */
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.9rem;
+            letter-spacing: -0.3px;
+            color: #0b3b5f;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card-title .title-emoji {
+            font-size: 1.8rem;
+        }
+
+        .intro-text {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #1e4a6e;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #FFB347;
+            padding-left: 1rem;
+            background: rgba(255,245,210,0.4);
+            border-radius: 0 12px 12px 0;
+        }
+
+        /* Contenedor de mini cards (incluye tanto las temáticas como la info extra que antes era botón) */
+        .mini-cards-area {
+            margin-top: 0.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        /* Cada mini card desplegable */
+        .mini-card-item {
+            background: rgba(235, 248, 255, 0.85);
+            border-radius: 1.2rem;
+            transition: all 0.2s;
+            border: 1px solid rgba(0, 100, 150, 0.2);
+        }
+        .mini-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.85rem 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            background: rgba(255, 250, 225, 0.8);
+            border-radius: 1.2rem;
+            transition: background 0.2s ease;
+        }
+        .mini-header span:first-of-type {
+            font-size: 1.4rem;
+        }
+        .mini-header .mini-title {
+            flex: 1;
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: #0c4a6e;
+        }
+        .toggle-emoji {
+            font-size: 1rem;
+            transition: transform 0.2s;
+            color: #f39c12;
+            font-weight: bold;
+        }
+        .mini-header:hover {
+            background: #fff2df;
+        }
+
+        /* --- ANIMACIÓN SUAVE (mejorada) --- */
+        .mini-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.33, 1, 0.68, 1);
+            padding: 0 1rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #1e3a5f;
+            border-top: 0px solid transparent;
+        }
+        .mini-content.show {
+            max-height: 220px;      /* espacio suficiente para ~5 líneas */
+            padding: 0 1rem 1rem 1rem;
+            border-top: 1px solid #ffcd94;
+            transition: max-height 0.5s cubic-bezier(0.33, 1, 0.68, 1);
+        }
+        .mini-content p {
+            margin-top: 0.8rem;
+        }
+        /* texto info extra (fórmulas) también coherente */
+        .info-extra-text {
+            font-family: 'Inter', monospace;
+            background: #eef4ff;
+            padding: 0.5rem;
+            border-radius: 12px;
+            margin-top: 0.4rem;
+        }
+
+        @media (max-width: 780px) {
+            body { padding: 1rem; }
+            .hero h1 { font-size: 2rem; }
+            .card-title { font-size: 1.4rem; }
+        }
+
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #fff3d1;
+            background: rgba(0,0,0,0.1);
+            border-radius: 2rem;
+            padding: 0.8rem;
+            backdrop-filter: blur(4px);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+<div class="infografia-container">
+    <div class="hero">
+        <h1>Valoración De Derivados</h1>
+
+    </div>
+
+    <div class="cards-grid">
+        <!-- CARD 1: MATEMÁTICAS FINANCIERAS (un solo emoji en título: 🧮) -->
+        <div class="principal-card">
+            <div class="card-title"><span class="title-emoji">🧮</span> Matemáticas Financieras</div>
+            <div class="intro-text">
+                Las matemáticas financieras estudian cómo cambia el valor del dinero a través del tiempo. Esta disciplina permite analizar inversiones, préstamos y decisiones económicas utilizando herramientas matemáticas. Su fundamento principal es que una cantidad de dinero disponible hoy tiene un valor diferente al de la misma cantidad en el futuro. Gracias a sus métodos es posible calcular rentabilidades, riesgos y costos financieros. Es una base indispensable para la valoración de activos e instrumentos financieros.
+            </div>
+            <!-- reemplazo del botón por mini card informativa -->
+            <div class="mini-cards-area">
+                <!-- mini card extra: más información / fórmulas -->
+                <div class="mini-card-item">
+                    <div class="mini-header" onclick="toggleMini(this)">
+                        <span>📘</span>
+                        <span class="mini-title">🔍 Fórmulas clave & herramientas</span>
+                        <span class="toggle-emoji">▼</span>
+                    </div>
+                    <div class="mini-content">
+                        <p>📌 <strong>Interés Simple:</strong> I = C · i · t  →  <strong>Interés Compuesto:</strong> VF = VP·(1+i)^n<br>
+                        📌 <strong>Valor Actual Neto:</strong> VAN = Σ (Flujoₜ/(1+k)ᵗ) - Inversión inicial.<br>
+                        📌 Utilizadas para valorar forwards, opciones y swaps. Fundamentales en Black-Scholes.</p>
+                    </div>
+                </div>
+                <!-- mini cards temáticas originales -->
+                <div class="mini-card-item"><div class="mini-header" onclick="toggleMini(this)"><span>💰</span><span class="mini-title">Capital</span><span class="toggle-emoji">▼</span></div><div class="mini-content"><p>Es la cantidad inicial de dinero utilizada en una operación financiera. Puede representar una inversión, un préstamo o un ahorro. Sobre este valor se calculan los intereses generados durante un período determinado. Constituye el punto de partida para la mayoría de los cálculos financieros.</p></div></div>
+                <div class="mini-card-item"><div class="mini-header" onclick="toggleMini(this)"><span>📈</span><span class="mini-title">Interés</span><span class="toggle-emoji">▼</span></div><div class="mini-content"><p>Es la compensación económica por el uso del dinero durante un tiempo específico. Puede ser visto como el costo de un préstamo o la ganancia de una inversión. Su valor depende del capital, la tasa aplicada y el plazo. Es uno de los conceptos fundamentales en las finanzas.</p></div></div>
+                <div class="mini-card-item"><div class="mini-header" onclick="toggleMini(this)"><span>📊</span><span class="mini-title">Tasa de Interés</span><span class="toggle-emoji">▼</span></div><div class="mini-content"><p>Representa el porcentaje utilizado para calcular los intereses sobre un capital. Permite medir el rendimiento de una inversión o el costo de una deuda. Puede expresarse de forma anual, mensual o diaria. Es un elemento clave para comparar alternativas financieras.</p></div></div>
+                <div class="mini-card-item"><div class="mini-header" onclick="toggleMini(this)"><span>🔄</span><span class="mini-title">Capitalización</span><span class="toggle-emoji">▼</span></div><div class="mini-content"><p>Proceso mediante el cual los intereses generados se incorporan al capital inicial. Esto provoca que en períodos posteriores se generen intereses sobre intereses. Es la base del interés compuesto. Permite el crecimiento acelerado de una inversión a largo plazo.</p></div></div>
+                <div class="mini-card-item"><div class="mini-header" onclick="toggleMini(this)"><span>⬅️</span><span class="mini-title">Descuento</span><span class="toggle-emoji">▼</span></div><div class="mini-content"><p>Es el procedimiento contrario a la capitalización. Consiste en determinar cuánto vale actualmente una cantidad de dinero que se recibirá en el futuro. Se utiliza ampliamente en la evaluación de proyectos e inversiones. Permite calcular el valor presente de flujos futuros.</p></div></div>
+            </div>
+        </div>
+
+        <!-- CARD 2: VALOR PRESENTE Y VALOR FUTURO (un solo emoji título: ⏳) -->
+        <div class="principal-card">
+            <div class="card-title"><span class="title-emoji">⏳</span> Valor Presente y Valor Futuro</div>
+            <div class="intro-text">
+                El Valor Presente y el Valor Futuro son conceptos esenciales en las matemáticas financieras. Ambos permiten relacionar cantidades de dinero ubicadas en momentos diferentes del tiempo. A través de una tasa de interés es posible trasladar valores desde el presente hacia el futuro o viceversa. Estas herramientas son utilizadas para analizar inversiones, préstamos y proyectos empresariales. Comprenderlas es fundamental para tomar decisiones financieras acertadas.
+            </div>
+            <div class="mini-cards-area">
+                <!-- Info extra / fórmulas en lugar del botón -->
+                <div class="mini-card-item">
+                    <div class="mini-header" onclick="toggleMini(this)">
+                        <span>🧾</span>
+                        <span class="mini-title">📐 Fórmulas VP y VF</span>
+                        <span class="toggle-emoji">▼</span>
+                    </div>
+                    <div class="mini-content">
+                        <p>✨ <strong>Valor Futuro:</strong> VF = VP × (1 + i)^n &nbsp;&nbsp;| <strong>Valor Presente:</strong> VP = VF / (1 + i)^n<br>
+                        ⚡ Aplicación en derivados: valuación de bonos cupón cero, forwards sobre tasas.<br>
+                        📌 La capitalización continua: VF = VP · e^(r·t).</p>
+                    </div>
+                </div>
+                <div class="mini-card-item"><div class="mini-header" onclick="toggleMini(this)"><span>📈</span><span class="mini-title">Valor Futuro (VF)</span><span class="toggle-emoji">▼</span></div><div class="mini-content"><p>Representa el monto que alcanzará una inversión después de aplicar una tasa de interés durante un período determinado. Refleja el crecimiento del dinero mediante la capitalización. Es utilizado para proyectar inversiones y ahorros. Su cálculo considera tanto el capital inicial como el tiempo transcurrido.</p></div></div>
+                <div class="mini-card-item"><div class="mini-header" onclick="toggleMini(this)"><span>📉</span><span class="mini-title">Valor Presente (VP)</span><span class="toggle-emoji">▼</span></div><div class="mini-content"><p>Es el valor actual de una suma de dinero que se recibirá en el futuro. Para determinarlo se aplica una tasa de descuento. Permite comparar cantidades monetarias ubicadas en diferentes momentos. Es ampliamente utilizado en valoración financiera y evaluación de inversiones.</p></div></div>
+                <div class="mini-card-item"><div class="mini-header" onclick="toggleMini(this)"><span>⚖️</span><span class="mini-title">Diferencias entre VP y VF</span><span class="toggle-emoji">▼</span></div><div class="mini-content"><p>Mientras el Valor Presente busca determinar cuánto vale hoy una cantidad futura, el Valor Futuro calcula cuánto valdrá una cantidad actual en el futuro. Ambos conceptos están conectados por una tasa de interés. Constituyen herramientas fundamentales para el análisis financiero.</p></div></div>
+                <div class="mini-card-item"><div class="mini-header" onclick="toggleMini(this)"><span>📝</span><span class="mini-title">Aplicaciones</span><span class="toggle-emoji">▼</span></div><div class="mini-content"><p>Se utilizan para evaluar proyectos, valorar inversiones y analizar créditos. También permiten comparar alternativas financieras con distintos horizontes temporales. Son herramientas indispensables en empresas, bancos y mercados financieros. Facilitan una mejor toma de decisiones económicas.</p></div></div>
+            </div>
+        </div>
+
+        <!-- CARD 3: TASA DE INTERÉS (un solo emoji título: 📊) -->
+        <div class="principal-card">
+            <div class="card-title"><span class="title-emoji">📊</span> Tasa de Interés</div>
+            <div class="intro-text">
+                La tasa de interés representa el precio del dinero en el tiempo. Indica cuánto se gana por invertir recursos o cuánto se paga por utilizarlos mediante un préstamo. Es uno de los indicadores más importantes dentro de los mercados financieros. Su comportamiento influye directamente en el consumo, el ahorro y la inversión. Además, es utilizada en prácticamente todos los cálculos financieros.
+            </div>
+            <div class="mini-cards-area">
+                <!-- Información extra sobre tasas -->
+                <div class="mini-card-item">
+                    <div class="mini-header" onclick="toggleMini(this)">
+                        <span>📖</span>
+                        <span class="mini-title">📌 Conversión de tasas & ejemplos</span>
+                        <span class="toggle-emoji">▼</span>
+                    </div>
+                    <div class="mini-content">
+                        <p>📐 Tasa nominal vs efectiva: (1 + i_efectiva) = (1 + i_nominal/m)^m.<br>
+                        🔁 Relación con derivados: valoración de swaps de tasas, FRAs.<br>
+                        💡 La tasa libre de riesgo es input clave en modelos Black-Scholes para opciones.</p>
+                    </div>
+                </div>
+                <div class="mini-card-item"><div class="mini-header" onclick="toggleMini(this)"><span>📌</span><span class="mini-title">Interés Simple</span><span class="toggle-emoji">▼</span></div><div class="mini-content"><p>Se calcula únicamente sobre el capital inicial durante toda la operación. Los intereses generados no se acumulan para producir nuevos intereses. Su aplicación suele utilizarse en operaciones de corto plazo. Es más sencillo de calcular que el interés compuesto.</p></div></div>
+                <div class="mini-card-item"><div class="mini-header" onclick="toggleMini(this)"><span>🔄</span><span class="mini-title">Interés Compuesto</span><span class="toggle-emoji">▼</span></div><div class="mini-content"><p>Permite que los intereses generados se sumen al capital original. Como resultado, los nuevos intereses se calculan sobre un monto cada vez mayor. Este mecanismo potencia el crecimiento de las inversiones. Es el sistema más utilizado en el ámbito financiero moderno.</p></div></div>
+                <div class="mini-card-item"><div class="mini-header" onclick="toggleMini(this)"><span>📉</span><span class="mini-title">Tasa de Descuento</span><span class="toggle-emoji">▼</span></div><div class="mini-content"><p>Es la tasa utilizada para traer al presente valores que se recibirán en el futuro. Refleja factores como el riesgo y el costo de oportunidad. Es esencial para calcular el Valor Presente Neto. También se emplea en valoración de empresas e inversiones.</p></div></div>
+                <div class="mini-card-item"><div class="mini-header" onclick="toggleMini(this)"><span>💡</span><span class="mini-title">Importancia</span><span class="toggle-emoji">▼</span></div><div class="mini-content"><p>Las tasas de interés afectan decisiones de inversión, ahorro y financiamiento. Determinan la rentabilidad esperada de los proyectos y el costo de los préstamos. Además, influyen en la actividad económica general. Son un indicador fundamental para inversionistas y empresas.</p></div></div>
+            </div>
+        </div>
+
+        <!-- CARD 4: VALOR PRESENTE NETO (VPN) y TIR (un solo emoji título: 💹) -->
+        <div class="principal-card">
+            <div class="card-title"><span class="title-emoji">💹</span> Valor Presente Neto (VPN)</div>
+            <div class="intro-text">
+                El Valor Presente Neto es una herramienta utilizada para evaluar la rentabilidad de una inversión o proyecto. Consiste en actualizar todos los flujos de efectivo futuros y compararlos con la inversión inicial realizada. Su objetivo es determinar si una inversión generará valor económico. Es uno de los métodos más utilizados en finanzas corporativas. Su análisis facilita decisiones de inversión más precisas y fundamentadas.
+            </div>
+            <div class="mini-cards-area">
+                <!-- Info extra de fórmulas y TIR -->
+                <div class="mini-card-item">
+                    <div class="mini-header" onclick="toggleMini(this)">
+                        <span>🧮</span>
+                        <span class="mini-title">🎯 Fórmula VPN y TIR</span>
+                        <span class="toggle-emoji">▼</span>
+                    </div>
+                    <div class="mini-content">
+                        <p>📐 <strong>VPN</strong> = -Inversión + Σ (Flujoₜ / (1+k)ᵗ) . <strong>TIR</strong> = tasa que hace VPN = 0.<br>
+                        ✅ En valoración de derivados: se usa para valuar proyectos con opciones reales y flujos contingentes.<br>
+                        📈 Regla de decisión: VPN > 0 ➔ aceptar; TIR > costo de capital ➔ proyecto atractivo.</p>
+                    </div>
+                </div>
+                <div class="mini-card-item"><div class="mini-header" onclick="toggleMini(this)"><span>➕</span><span class="mini-title">VPN > 0</span><span class="toggle-emoji">▼</span></div><div class="mini-content"><p>Indica que el proyecto genera beneficios superiores al costo de la inversión. Esto significa que crea valor para los inversionistas. Generalmente se considera una señal favorable para aceptar la propuesta. Mientras mayor sea el VPN, más atractiva será la inversión.</p></div></div>
+                <div class="mini-card-item"><div class="mini-header" onclick="toggleMini(this)"><span>⚖️</span><span class="mini-title">VPN = 0</span><span class="toggle-emoji">▼</span></div><div class="mini-content"><p>Se presenta cuando los beneficios esperados son exactamente iguales a los costos del proyecto. No genera pérdidas ni ganancias adicionales. La decisión de invertir dependerá de factores estratégicos o cualitativos. Se considera una inversión neutral.</p></div></div>
+                <div class="mini-card-item"><div class="mini-header" onclick="toggleMini(this)"><span>➖</span><span class="mini-title">VPN < 0</span><span class="toggle-emoji">▼</span></div><div class="mini-content"><p>Refleja que los beneficios futuros no compensan la inversión realizada. El proyecto destruye valor económico para el inversionista. Normalmente se recomienda rechazar este tipo de inversiones. Indica que existen mejores alternativas disponibles.</p></div></div>
+                <div class="mini-card-item"><div class="mini-header" onclick="toggleMini(this)"><span>🎯</span><span class="mini-title">Tasa Interna de Retorno (TIR)</span><span class="toggle-emoji">▼</span></div><div class="mini-content"><p>Es la tasa de descuento que hace que el VPN sea igual a cero. Permite medir la rentabilidad potencial de un proyecto. Cuanto mayor sea la TIR, más atractivo suele resultar el proyecto. Es uno de los indicadores financieros más utilizados en valoración de derivados y proyectos.</p></div></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        📌 Infografía · Sin botones externos (todo mini card desplegable) · Animación suave · Un solo emoji por título
+    </footer>
+</div>
+
+<script>
+    // Función para toggle de mini-cards con animación suave y cambio de ícono emoji ▲/▼
+    function toggleMini(element) {
+        // element es el .mini-header clickeado
+        const miniItem = element.closest('.mini-card-item');
+        const contentDiv = miniItem.querySelector('.mini-content');
+        const toggleSpan = element.querySelector('.toggle-emoji');
+        
+        if (!contentDiv) return;
+        
+        if (contentDiv.classList.contains('show')) {
+            contentDiv.classList.remove('show');
+            if (toggleSpan) {
+                toggleSpan.innerHTML = '▼';
+            }
+        } else {
+            // Cerrar otros abiertos dentro de la misma card principal para mantener orden (opcional)
+            const parentCard = miniItem.closest('.principal-card');
+            if (parentCard) {
+                const allOpen = parentCard.querySelectorAll('.mini-content.show');
+                allOpen.forEach(openDiv => {
+                    if (openDiv !== contentDiv) {
+                        openDiv.classList.remove('show');
+                        // buscar el toggle correspondiente
+                        const otherItem = openDiv.closest('.mini-card-item');
+                        if (otherItem) {
+                            const otherToggle = otherItem.querySelector('.toggle-emoji');
+                            if (otherToggle) otherToggle.innerHTML = '▼';
+                        }
+                    }
+                });
+            }
+            contentDiv.classList.add('show');
+            if (toggleSpan) {
+                toggleSpan.innerHTML = '▲';
+            }
+        }
+    }
+
+    // Inicialización: todas las mini-cards cerradas, iconos en ▼
+    document.querySelectorAll('.mini-content').forEach(content => {
+        content.classList.remove('show');
+    });
+    document.querySelectorAll('.toggle-emoji').forEach(emojiSpan => {
+        emojiSpan.innerHTML = '▼';
+    });
+</script>
+</body>
+</html>
